@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        PATH = PATH = "${env.PATH}:/usr/local/bin" // Update the PATH to include the directory of cmd.exe
+        PATH = "${env.PATH}:/usr/local/bin" // Update the PATH to include the directory of cmd.exe
     }
 
     stages {
