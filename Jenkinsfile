@@ -1,31 +1,37 @@
 pipeline {
     agent any
-    
+
+    environment {
+        PATH = PATH = "${env.PATH}:/usr/local/bin" // Update the PATH to include the directory of cmd.exe
+    }
+
     stages {
-        stage('Clean') {
+        stage('Checkout') {
             steps {
-                // Clean the project
-                sh 'mvn clean'
+                git branch: 'main', url: 'https://github.com/eliaspehkonen/FarToCel.git'
             }
         }
-        stage('Install') {
+
+        stage('Build') {
             steps {
-                // Install project dependencies
-                sh 'mvn install -DskipTests=true'
+                bat 'mvn clean install'
             }
         }
-        stage('Compile') {
+
+        stage('Test') {
             steps {
-                // Compile the project
-                sh 'mvn compile'
+                bat 'mvn test'
             }
-        }
-        stage('Verify') {
-            steps {
-                // Run project tests
-                sh 'mvn verify'
+
+            post {
+                success {
+                    // Publish JUnit test results
+                    junit '**/target/surefire-reports/TEST-*.xml'
+
+                    // Generate JaCoCo code coverage report
+                    jacoco(execPattern: '**/target/jacoco.exec')
+                }
             }
         }
     }
 }
-
