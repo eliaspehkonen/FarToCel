@@ -7,4 +7,8 @@ public class FahrtToCel {
     public static float kelvinToCel(float kel){
         return (float) (kel-273.15);
     }
+
+    public static float kelvinToFahrt(float kel){
+        return (float) ((kel-273.15) * (9/5) + 32);
+    }
 }

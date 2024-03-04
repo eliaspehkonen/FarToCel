@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 public class FahrtToCelTest {
     // Define a small delta value for floating-point comparisons
     private static final double DELTA = 0.001;
+    private static final double DELTA2 = 0.1;
 
     @Test
     public void testConvertFahrt() {
@@ -21,5 +22,10 @@ public class FahrtToCelTest {
         assertEquals(37, FahrtToCel.kelvinToCel(310.15f), DELTA);
         assertEquals(20, FahrtToCel.kelvinToCel(293.15f), DELTA);
     }
-}
 
+    @Test
+    public void testKelvinToFahrt() {
+        float test = Math.round(FahrtToCel.kelvinToFahrt(300.1F));
+        assertEquals(59.1F, test, DELTA2);
+    }
+}
